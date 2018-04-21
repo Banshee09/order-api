@@ -1,7 +1,6 @@
 package com.order.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,8 @@ public class CategoryService {
 		return categoryRepository.findById(id).get();
 	}
 	
-	public void addCategory(Category category) {
-		categoryRepository.save(category);
+	public Integer addCategory(Category category) {
+		return categoryRepository.save(category).getId();
 	}
 
 	public void editCategory(Integer id, Category category) {

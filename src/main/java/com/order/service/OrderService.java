@@ -16,9 +16,20 @@ public class OrderService {
 	@Autowired
 	private OrderRepository OrderRepository;
 	
-	public List<Order> getOrders () {
+	public List<Order> getOrders (boolean showAll) {
 		List<Order> orders = new ArrayList<Order>();
-		OrderRepository.findAll().forEach(orders::add);
+		if(!showAll)
+			OrderRepository.findOutstandingOrder().forEach(orders::add);
+		else
+			OrderRepository.findAll().forEach(orders::add);
+		
+		return orders; 
+	}
+	
+	public List<Order> getOrdersForCustomer (String name, String phone) {
+		List<Order> orders = new ArrayList<Order>();
+			OrderRepository.findByNameAndPhoneOrderByStartTimeDesc(name, phone).forEach(orders::add);
+		
 		return orders; 
 	}
 	
@@ -26,8 +37,8 @@ public class OrderService {
 		return OrderRepository.findById(id).get();
 	}
 	
-	public void addOrder(Order Order) {
-		OrderRepository.save(Order);
+	public Integer addOrder(Order Order) {
+		return OrderRepository.save(Order).getId();
 	}
 
 	public void editOrder(Integer id, Order Order) {
@@ -42,7 +53,7 @@ public class OrderService {
 		OrderRepository.setPayTimeFor(id, payTime);
 	}
 	
-	public void endOrder(Integer id, Date endTime) {
-		OrderRepository.setEndTimeFor(id, endTime);
+	public void serveOrder(Integer id, Date endTime) {
+		OrderRepository.setServeTimeFor(id, endTime);
 	}
 }

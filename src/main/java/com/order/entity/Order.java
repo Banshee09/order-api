@@ -5,15 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name="ord")
 public class Order {
@@ -23,9 +18,10 @@ public class Order {
 	private Integer id;
 	private String name;
 	private String phone;
+	private Double total;
 	private String note;
 	private Date startTime;
-	private Date endTime;
+	private Date serveTime;
 	private Date payTime;
 
 	@ManyToMany
@@ -35,15 +31,16 @@ public class Order {
 		super();
 	}
 
-	public Order(Integer id, String name, String phone, String note, Date startTime, Date endTime, Date payTime, 
-			List<Product> products) {
+	public Order(Integer id, String name, String phone, Double total, String note, Date startTime, Date serveTime,
+			Date payTime, List<Product> products) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.phone = phone;
+		this.total = total;
 		this.note = note;
 		this.startTime = startTime;
-		this.endTime = endTime;
+		this.serveTime = serveTime;
 		this.payTime = payTime;
 		this.products = products;
 	}
@@ -72,6 +69,14 @@ public class Order {
 		this.phone = phone;
 	}
 
+	public Double getTotal() {
+		return total;
+	}
+
+	public void setTotal(Double total) {
+		this.total = total;
+	}
+
 	public String getNote() {
 		return note;
 	}
@@ -88,12 +93,12 @@ public class Order {
 		this.startTime = startTime;
 	}
 
-	public Date getEndTime() {
-		return endTime;
+	public Date getServeTime() {
+		return serveTime;
 	}
 
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
+	public void setServeTime(Date serveTime) {
+		this.serveTime = serveTime;
 	}
 
 	public Date getPayTime() {
@@ -111,5 +116,6 @@ public class Order {
 	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
+
 
 }

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
 	
+	@CrossOrigin
 	@RequestMapping(method=RequestMethod.GET, value="/categories")
 	public Map<String, Object> getCategories() {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -27,6 +29,7 @@ public class CategoryController {
 		return response;
 	}
 
+	@CrossOrigin
 	@RequestMapping(method=RequestMethod.GET, value="/categories/{id}")
 	public Map<String, Object> getCategory(@PathVariable Integer id) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -35,14 +38,17 @@ public class CategoryController {
 		return response;
 	}
 	
+	@CrossOrigin
 	@RequestMapping(method=RequestMethod.POST, value="/categories")
 	public Map<String, Object> addCategory(@RequestBody Category category) {
-		categoryService.addCategory(category);
+		Integer id = categoryService.addCategory(category);
 		Map<String, Object> response = new HashMap<String, Object>();
 		response.put("message", RequestMethod.POST + " successfully");
+		response.put("id", id);
 		return response;
 	}
 	
+	@CrossOrigin
 	@RequestMapping(method=RequestMethod.PUT, value="/categories/{id}")
 	public Map<String, Object> editCategory(@PathVariable Integer id, @RequestBody Category category) {
 		categoryService.editCategory(id, category);
@@ -51,6 +57,7 @@ public class CategoryController {
 		return response;
 	}
 	
+	@CrossOrigin
 	@RequestMapping(method=RequestMethod.DELETE, value="/categories/{id}")
 	public Map<String, Object> deleteCategory(@PathVariable Integer id) {
 		categoryService.deleteCategory(id);
@@ -58,4 +65,5 @@ public class CategoryController {
 		response.put("message", RequestMethod.DELETE + " successfully");
 		return response;
 	}
+	
 }

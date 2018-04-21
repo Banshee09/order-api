@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
+	@CrossOrigin
 	@RequestMapping(method=RequestMethod.GET, value="/products")
 	public Map<String, Object> getProducts() {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -27,6 +29,7 @@ public class ProductController {
 		return response;
 	}
 
+	@CrossOrigin
 	@RequestMapping(method=RequestMethod.GET, value="/products/{id}")
 	public Map<String, Object> getProduct(@PathVariable Integer id) {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -35,14 +38,17 @@ public class ProductController {
 		return response;
 	}
 	
+	@CrossOrigin
 	@RequestMapping(method=RequestMethod.POST, value="/products")
 	public Map<String, Object> addProduct(@RequestBody Product product) {
-		productService.addProduct(product);
+		Integer id = productService.addProduct(product);
 		Map<String, Object> response = new HashMap<String, Object>();
 		response.put("message", RequestMethod.POST + " successfully");
+		response.put("id", id);
 		return response;
 	}
 	
+	@CrossOrigin
 	@RequestMapping(method=RequestMethod.PUT, value="/products/{id}")
 	public Map<String, Object> editProduct(@PathVariable Integer id, @RequestBody Product product) {
 		productService.editProduct(id, product);
@@ -51,6 +57,7 @@ public class ProductController {
 		return response;
 	}
 	
+	@CrossOrigin
 	@RequestMapping(method=RequestMethod.DELETE, value="/products/{id}")
 	public Map<String, Object> deleteProduct(@PathVariable Integer id) {
 		productService.deleteProduct(id);

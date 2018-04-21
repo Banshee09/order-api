@@ -1,7 +1,6 @@
 package com.order.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,8 @@ public class ProductService {
 		return ProductRepository.findById(id).get();
 	}
 	
-	public void addProduct(Product Product) {
-		ProductRepository.save(Product);
+	public Integer addProduct(Product Product) {
+		return ProductRepository.save(Product).getId();
 	}
 
 	public void editProduct(Integer id, Product Product) {
